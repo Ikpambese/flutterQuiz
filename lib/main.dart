@@ -13,46 +13,47 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final questions = const [
+    {
+      'questionText': 'What\'s your favorite color',
+      'answers': ['Black', 'Red', 'Green', 'White'],
+    },
+    {
+      'questionText': 'What\'s your favorite animal',
+      'answers': ['Rabbit', 'Snake', 'Elephant', 'Lion'],
+    },
+    {
+      'questionText': 'Who\'s your favorite instructor',
+      'answers': ['Dr. Aamo', 'Dr. Karim', 'Dr. Obilikwu', 'Mrs Beatrice'],
+    },
+  ];
   var _questionIndex = 0;
   void _answerQuestion() {
     setState(() {
       _questionIndex = _questionIndex + 1;
     });
     print(_questionIndex);
+    if (_questionIndex < questions.length) {
+      print('We have more Questions!');
+    } else {
+      print('No more questions!');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    var questions = [
-      {
-        'questionText': 'What\'s your favorite color',
-        'answers': ['Black', 'Red', 'Green', 'White'],
-      },
-      {
-        'questionText': 'What\'s your favorite animal',
-        'answers': ['Rabbit', 'Snake', 'Elephant', 'Lion'],
-      },
-      {
-        'questionText': 'Who\'s your favorite instructor',
-        'answers': ['Dr. Aamo', 'Dr. Karim', 'Dr. Obilikwu', 'Mrs Beatrice'],
-      },
-      
-    ];
+    // questions = []; this does not work if question is a const
+
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
           title: Text('MY First App'),
         ),
-        body: Column(
-          children: [
-            Question(
-              questions[_questionIndex],
-            ),
-            Answer(_answerQuestion),
-            Answer(_answerQuestion),
-            Answer(_answerQuestion),
-          ],
-        ),
+        body: _questionIndex < questions.length
+            ?
+            : Center(
+                child: Text('You did it'),
+              ),
       ),
     );
   }
